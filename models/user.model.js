@@ -1,7 +1,11 @@
-const schema = new mongoose.Schema({
-    fbID: String
+var mongoose = require("mongoose");
+
+//create schema
+var UserSchema = new mongoose.Schema({
+    fbid:{ type: String, required: true ,unique:true },
 });
-  
-const User = mongoose.model('User', schema);
-  
+
+//model 
+var User = mongoose.model("Users", UserSchema);
+
 module.exports = User;
