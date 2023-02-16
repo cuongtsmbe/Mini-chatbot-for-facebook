@@ -26,44 +26,60 @@ module.exports = {
 
   },
 
-  addChat:function(data){
+
+  addChat:function(user,data){
     var chat = new ChatModel({
-      user:data._id,
+      userID:user._id,
       botMessage:data.botMessage,
       userMessage:data.userMessage
     });
 
     chat.save()
-      .then(item => {
+      .then(chatItem => {
         console.log("--success--");
-          console.log(item);
+        console.log(chatItem);
       })
       .catch(err => {
           console.log(err);
     });
   },
+  addNewUser:function(fbid){
+    let userNew = new UserModel({fbid});
+    return userNew.save();
+  },
+
+  //get user by FBid . IF don't have fbid then create it
+  //return promise
   getUserByFbID:async function(fbid){
     let user = await UserModel.findOne({
       fbid,
-    });
+    }).exec();
+    if (!user) {
+      user = this.addNewUser(fbid);
+    }
     return user;
   },
   
-  //chua dung 
+  //get chats of user 
+  //return promise
+  getChatByUserId:async function(user) {
+    const chatRows = await ChatModel.find({userID:user._id})
+    .exec();
+    return chatRows;
+  },
 
-  // getChatByUserId: async function(userID) {
-  //   const chatRows = await ChatModel.find({ user: userID }).exec();
-  //   console.log("--get all chat by one user--");
-  //   console.log(chatRows);
-  //   return chatRows;
-  // },
+  //del chats of user 
+  //return promise
+  deleteChatByUserId: async function(user) {
+    const deletedChat = await ChatModel.deleteMany({ userID: user._id }).exec();
+    return deletedChat;
+  },
 
-  // deleteChatByUserId: async function(userID) {
-  //   const deletedChat = await ChatModel.deleteMany({ user: userID }).exec();
-  //   console.log("--delete--");
-  //   console.log(deletedChat);
-  //   return deletedChat;
-  // }
-  
+  //delete user have fbid
+  //return promise
+  deleteUserByFbID: async function(fbid) {
+    const delUser = await UserModel.deleteMany({ fbid }).exec();
+    return delUser;
+  }
 
 };

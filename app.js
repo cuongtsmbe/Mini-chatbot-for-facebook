@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors=require('cors');
 require('dotenv').config();
 const messengerMdw = require("./mdw/messenger.mdw");
-const ChatGPTService = require('./services/chatgpt.service');
+const ChatGPTService = require('./services/chat.service');
 const DB=require('./services/db.service');
 
 
@@ -24,21 +24,55 @@ const DB=require('./services/db.service');
   DB.connect();
   //add user
   // DB.addUser("FB-66");
+  // DB.addUser("FB-55");
 
-  //add chat content
-  // DB.addChat({
-  //   user:DB.getUserByFbID("FB-66"),
-  //   botMessage:"chao ban toi la bot",
-  //   userMessage:"toi muon hoi ban facebook 66-1"
-  // });
-
-  //get all chat of one userID 
-  //DB.getChatByUserId(DB.getUserByFbID("FB-66")._id);
-
-
-  //delete All chat by UserID
-  //DB.deleteChatByUserId(DB.getUserByFbID("FB-66")._id);
+  // //add chat content for user
+  // var chatOfUser=DB.getUserByFbID("FB-99");
+  // chatOfUser.then(user => {
+  //   DB.addChat(user,{
+  //       botMessage:"chao ban toi la bot",
+  //       userMessage:"toi muon hoi ban facebook 99-4"
+  //   });
+  //   DB.addChat(user,{
+  //     botMessage:"chao ban toi la bot",
+  //     userMessage:"toi muon hoi ban facebook 99-5"
+  //   });
+  //   DB.addChat(user,{
+  //       botMessage:"chao ban toi la bot",
+  //       userMessage:"toi muon hoi ban facebook 99-6"
+  //   });
+  // }).catch(e => 
+  //   console.log(e)
+  // )
   
+  // //get all chat of one userID 
+  var userFindChat=DB.getUserByFbID("FB-99");
+  userFindChat.then(item => {
+    return DB.getChatByUserId(item);
+  }).then(data => {
+    console.log("data chats");
+    console.log(data);
+  }).catch(e => 
+    console.log(e)
+  )
+
+  // //delete All chat by UserID
+  //var userDel=DB.getUserByFbID("FB-88");
+  // userDel.then(item => {
+  //   return DB.deleteChatByUserId(item);
+  // }).then(data => {
+  //   console.log(data);
+  // }).catch(e => 
+  //   console.log(e)
+  // )
+ 
+ 
+  // DB.deleteUserByFbID("FB-99").then(data => {
+  //   console.log("--delete User--")
+  //   console.log(data);
+  // }).catch(e => 
+  //   console.log(e)
+  // )
 
 //Add support for GET requests to our webhook
 app.get("/webhook",messengerMdw.getWebHook);

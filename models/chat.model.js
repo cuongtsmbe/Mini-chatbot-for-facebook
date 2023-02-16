@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 //user sẽ chứa một ObjectId của một đối tượng User
 const schema = new mongoose.Schema({
-  user: {
+  userID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Users'
   },
   botMessage: { type: String, required: true },
   userMessage: { type: String, required: true },

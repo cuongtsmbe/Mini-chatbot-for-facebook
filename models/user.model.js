@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 //create schema
 var UserSchema = new mongoose.Schema({
     fbid:{ type: String, required: true ,unique:true },
+    
 });
 
 //model 
