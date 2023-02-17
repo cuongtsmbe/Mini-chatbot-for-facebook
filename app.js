@@ -74,7 +74,7 @@ const DB=require('./services/db.service');
   // )
 
 app.get("/",function(req,res){
-  res.send("/ OK run");
+  res.send("let go to fb and chat now.");
 })
 app.get("/status",function(req,res){
   res.send("status run");
