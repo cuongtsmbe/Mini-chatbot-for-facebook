@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+require('dotenv').config();
+const port = process.env.PORT || 80;
 const bodyParser = require('body-parser');
 const cors=require('cors');
-require('dotenv').config();
 const messengerMdw = require("./mdw/messenger.mdw");
 const DB=require('./services/db.service');
 
