@@ -4,8 +4,10 @@
   "description": "11/2/2023 16:05 nodejs chatbot-demo-server",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cuongtsmbe/chatbot-messenger.git"
