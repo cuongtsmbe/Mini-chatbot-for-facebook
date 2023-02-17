@@ -11,7 +11,10 @@ module.exports = {
           let mode = req.query["hub.mode"];
           let token = req.query["hub.verify_token"];
           let challenge = req.query["hub.challenge"];
-        
+          console.log("getWebHook()");
+          console.log(`mode : ${mode}`);
+          console.log(`token : ${token}`);
+          console.log(`challenge : ${challenge}`);
           // Check if a token and mode is in the query string of the request
           if (mode && token) {
             // Check the mode and token sent is correct
