@@ -74,7 +74,10 @@ const DB=require('./services/db.service');
   // )
 
 app.get("/",function(req,res){
-  res.send("OK run");
+  res.send("/ OK run");
+})
+app.get("/status",function(req,res){
+  res.send("status run");
 })
 
 //Add support for GET requests to our webhook
