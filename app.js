@@ -77,6 +77,9 @@ const DB=require('./services/db.service');
 app.get("/webhook",messengerMdw.getWebHook);
 app.post('/webhook', messengerMdw.postWebHook);
 
+app.get("/status",function(req,res){
+  res.send("OK run");
+})
 app.listen(port, () => {
   console.log(` listening on port ${port}!`);
 });
