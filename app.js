@@ -81,8 +81,14 @@ app.get("/status",function(req,res){
 })
 
 //Add support for GET requests to our webhook
-app.get("/webhook",messengerMdw.getWebHook);
-app.post('/webhook', messengerMdw.postWebHook);
+app.get("/webhook",function(req,res,next){
+  console.log("GET - webhook");
+  next();
+},messengerMdw.getWebHook);
+app.post('/webhook',function(req,res,next){
+  console.log("POST - webhook");
+  next();
+}, messengerMdw.postWebHook);
 
 
 app.listen(port, () => {
