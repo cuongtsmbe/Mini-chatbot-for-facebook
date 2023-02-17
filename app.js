@@ -21,44 +21,15 @@ const DB=require('./services/db.service');
 
   //connect DB
   DB.connect();
+  
   //add user
   // DB.addUser("FB-66");
   // DB.addUser("FB-55");
 
-  // //add chat content for user
-  // var chatOfUser=DB.getUserByFbID("FB-99");
-  // chatOfUser.then(user => {
-  //   DB.addChat(user,{
-  //       botMessage:"chao ban toi la bot",
-  //       userMessage:"toi muon hoi ban facebook 99-4"
-  //   });
-  //   DB.addChat(user,{
-  //     botMessage:"chao ban toi la bot",
-  //     userMessage:"toi muon hoi ban facebook 99-5"
-  //   });
-  //   DB.addChat(user,{
-  //       botMessage:"chao ban toi la bot",
-  //       userMessage:"toi muon hoi ban facebook 99-6"
-  //   });
-  // }).catch(e => 
-  //   console.log(e)
-  // )
-  
-  // //get all chat of one userID 
-  // var userFindChat=DB.getUserByFbID("FB-99");
-  // userFindChat.then(item => {
-  //   return DB.getChatByUserId(item);
-  // }).then(data => {
-  //   console.log("data chats");
-  //   console.log(data);
-  // }).catch(e => 
-  //   console.log(e)
-  // )
-
   // //delete All chat by UserID
   //var userDel=DB.getUserByFbID("FB-88");
   // userDel.then(item => {
-  //   return DB.deleteChatByUserId(item);
+  //   return DB.deleteChatsByUserId(item);
   // }).then(data => {
   //   console.log(data);
   // }).catch(e => 
@@ -74,7 +45,7 @@ const DB=require('./services/db.service');
   // )
 
 app.get("/",function(req,res){
-  res.send("let go to fb and chat with AI.");
+  res.send("17/2/2023 . let go to fb and chat with AI.");
 })
 app.get("/status",function(req,res){
   res.send("status run");
@@ -82,11 +53,11 @@ app.get("/status",function(req,res){
 
 //Add support for GET requests to our webhook
 app.get("/webhook",function(req,res,next){
-  console.log("GET - webhook");
+  console.log("\nGET - webhook");
   next();
 },messengerMdw.getWebHook);
 app.post('/webhook',function(req,res,next){
-  console.log("POST - webhook");
+  console.log("\nPOST - webhook");
   next();
 }, messengerMdw.postWebHook);
 

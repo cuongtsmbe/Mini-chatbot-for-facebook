@@ -1,8 +1,12 @@
 const request = require('request');
 require('dotenv').config();
+const DB=require('./db.service');
+const ChatGPTService = require('./chat.service');
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-const ChatGPTService = require('./chat.service');
+
+
 
 module.exports={
 //handle Messenger text or file
@@ -13,8 +17,11 @@ module.exports={
         if (received_message.text) {    
         // Create the payload for a AI response text message, which
         // will be added to the body of our request to the Send API
-        let AIreponse=await ChatGPTService.generateCompletion(received_message.text);
-        
+
+        // get user by _id
+        let userCurrent =await DB.getUserByFbID(sender_psid);
+        let AIreponse=await ChatGPTService.generateCompletion(userCurrent,received_message.text);
+
         console.log("\n");
         console.log("------------------");
         console.log(`Khach Hang: ${received_message.text}`);

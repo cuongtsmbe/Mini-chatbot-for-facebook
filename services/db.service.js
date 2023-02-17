@@ -64,7 +64,7 @@ module.exports = {
   
   //get chats of user 
   //return promise
-  getChatByUserId:async function(user) {
+  getChatsByUserId:async function(user) {
     const chatRows = await ChatModel.find({userID:user._id})
     .exec();
     return chatRows;
@@ -72,7 +72,7 @@ module.exports = {
 
   //del chats of user 
   //return promise
-  deleteChatByUserId: async function(user) {
+  deleteChatsByUserId: async function(user) {
     const deletedChat = await ChatModel.deleteMany({ userID: user._id }).exec();
     return deletedChat;
   },
