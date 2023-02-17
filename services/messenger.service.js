@@ -14,6 +14,14 @@ module.exports={
         // Create the payload for a AI response text message, which
         // will be added to the body of our request to the Send API
         let AIreponse=await ChatGPTService.generateCompletion(received_message.text);
+        
+        console.log("\n");
+        console.log("------------------");
+        console.log(`Khach Hang: ${received_message.text}`);
+        console.log(`AI: ${AIreponse}`);
+        console.log("--------###-------");
+        console.log("\n");
+
         response = {
             "text": AIreponse
         }
