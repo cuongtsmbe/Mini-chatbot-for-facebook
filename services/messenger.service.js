@@ -2,21 +2,24 @@ const request = require('request');
 require('dotenv').config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+const ChatGPTService = require('./chat.service');
 
 module.exports={
 //handle Messenger text or file
-    handleMessage: function(sender_psid, received_message) {
+    handleMessage:async function(sender_psid, received_message) {
         let response;
         
         // Checks if the message contains text
         if (received_message.text) {    
-        // Create the payload for a basic text message, which
+        // Create the payload for a AI response text message, which
         // will be added to the body of our request to the Send API
+        let AIreponse=await ChatGPTService.generateCompletion(received_message.text);
         response = {
-            "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
+            "text": AIreponse
         }
         } else if (received_message.attachments) {
         // Get the URL of the message attachment
+        // reponse for image or ..
         let attachment_url = received_message.attachments[0].payload.url;
         response = {
             "attachment": {
@@ -25,7 +28,7 @@ module.exports={
                 "template_type": "generic",
                 "elements": [{
                 "title": "Is this the right picture?",
-                "subtitle": "Tap a button to answer.",
+                "subtitle": "Tôi không hiểu ảnh này của bạn.",
                 "image_url": attachment_url,
                 "buttons": [
                     {
@@ -59,7 +62,7 @@ module.exports={
         if (payload === 'yes') {
         response = { "text": "Thanks!" }
         } else if (payload === 'no') {
-        response = { "text": "Oops, try sending another image." }
+        response = { "text": "Oops, try sending text." }
         }
         // Send the message to acknowledge the postback
         this.callSendAPI(sender_psid, response);

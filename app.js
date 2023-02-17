@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cors=require('cors');
 require('dotenv').config();
 const messengerMdw = require("./mdw/messenger.mdw");
-const ChatGPTService = require('./services/chat.service');
 const DB=require('./services/db.service');
 
 
@@ -46,15 +45,15 @@ const DB=require('./services/db.service');
   // )
   
   // //get all chat of one userID 
-  var userFindChat=DB.getUserByFbID("FB-99");
-  userFindChat.then(item => {
-    return DB.getChatByUserId(item);
-  }).then(data => {
-    console.log("data chats");
-    console.log(data);
-  }).catch(e => 
-    console.log(e)
-  )
+  // var userFindChat=DB.getUserByFbID("FB-99");
+  // userFindChat.then(item => {
+  //   return DB.getChatByUserId(item);
+  // }).then(data => {
+  //   console.log("data chats");
+  //   console.log(data);
+  // }).catch(e => 
+  //   console.log(e)
+  // )
 
   // //delete All chat by UserID
   //var userDel=DB.getUserByFbID("FB-88");
@@ -77,7 +76,6 @@ const DB=require('./services/db.service');
 //Add support for GET requests to our webhook
 app.get("/webhook",messengerMdw.getWebHook);
 app.post('/webhook', messengerMdw.postWebHook);
-
 
 app.listen(port, () => {
   console.log(` listening on port ${port}!`);

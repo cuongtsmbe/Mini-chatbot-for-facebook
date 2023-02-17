@@ -26,7 +26,7 @@ module.exports = {
 
   },
 
-
+ //add new chat for user
   addChat:function(user,data){
     var chat = new ChatModel({
       userID:user._id,
@@ -43,6 +43,8 @@ module.exports = {
           console.log(err);
     });
   },
+
+  //add new user
   addNewUser:function(fbid){
     let userNew = new UserModel({fbid});
     return userNew.save();
