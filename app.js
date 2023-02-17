@@ -73,13 +73,15 @@ const DB=require('./services/db.service');
   //   console.log(e)
   // )
 
+app.get("/",function(req,res){
+  res.send("OK run");
+})
+
 //Add support for GET requests to our webhook
 app.get("/webhook",messengerMdw.getWebHook);
 app.post('/webhook', messengerMdw.postWebHook);
 
-app.get("/status",function(req,res){
-  res.send("OK run");
-})
+
 app.listen(port, () => {
   console.log(` listening on port ${port}!`);
 });
