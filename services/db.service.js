@@ -9,6 +9,7 @@ module.exports = {
     mongoose.Promise = global.Promise;
     mongoose.connect(process.env.MONGODB_URI);
   },
+  
   //add new id contact (fb)
   addUser:function(ID){
     var myData = new UserModel({
@@ -17,7 +18,7 @@ module.exports = {
 
     myData.save()
       .then(item => {
-        console.log("--success--");
+        console.log("--add new user success--");
           console.log(item);
       })
       .catch(err => {
@@ -36,7 +37,7 @@ module.exports = {
 
     chat.save()
       .then(chatItem => {
-        console.log("--success--");
+        console.log("--add chat DB success--");
         console.log(chatItem);
       })
       .catch(err => {

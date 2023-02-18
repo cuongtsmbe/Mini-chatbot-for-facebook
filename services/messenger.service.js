@@ -24,7 +24,7 @@ module.exports={
 
         console.log("\n");
         console.log("------------------");
-        console.log(`Khach Hang: ${received_message.text}`);
+        console.log(`user: ${received_message.text}`);
         console.log(`AI: ${AIreponse}`);
         console.log("--------###-------");
         console.log("\n");
@@ -66,6 +66,8 @@ module.exports={
         // Send the response message
         this.callSendAPI(sender_psid, response);    
     },
+
+    
     // Handles messaging_postbacks events
     handlePostback: function(sender_psid, received_postback) {
         let response;

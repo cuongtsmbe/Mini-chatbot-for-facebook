@@ -6,7 +6,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 module.exports = {
     getWebHook:(req, res) => {
-  
+        console.log("\nGET - webhook");
         // Parse the query params
           let mode = req.query["hub.mode"];
           let token = req.query["hub.verify_token"];
@@ -31,7 +31,7 @@ module.exports = {
           return res.sendStatus(404);
     },
     postWebHook:(req, res) => {  
-
+        console.log("\nPOST - webhook");
         // Parse the request body from the POST
         let body = req.body;
       

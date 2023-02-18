@@ -47,19 +47,11 @@ const DB=require('./services/db.service');
 app.get("/",function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
 })
-app.get("/status",function(req,res){
-  res.send("status run");
-})
 
-//Add support for GET requests to our webhook
-app.get("/webhook",function(req,res,next){
-  console.log("\nGET - webhook");
-  next();
-},messengerMdw.getWebHook);
-app.post('/webhook',function(req,res,next){
-  console.log("\nPOST - webhook");
-  next();
-}, messengerMdw.postWebHook);
+//Add support for GET requests to our webhook(facebook)
+app.get("/webhook",messengerMdw.getWebHook);
+
+app.post('/webhook', messengerMdw.postWebHook);
 
 
 app.listen(port, () => {
