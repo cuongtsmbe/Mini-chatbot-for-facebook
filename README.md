@@ -1,10 +1,11 @@
-# chatbot-messenger
+# chatbot messenger for fanpage facebook
 https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start
 
-Step 1: setting 
+Before begin you need create app in page developer facebook and add page need use chatbot
 
-npm i 
+Step 1: cd termial to folder have project and type "npm i" 
+Step 1: you need  create file .env same as .env.example
+Step 2: copy and paste token to file .env
+Step 3: push project to server/host have ssl
+Step 4: go to fanpage and try this with account admin
 
-Step 2: createfile .env from .env.example
-Step 3: (run) open terminal of project
-node app.js
