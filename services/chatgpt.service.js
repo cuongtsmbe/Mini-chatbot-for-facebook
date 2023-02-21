@@ -66,7 +66,8 @@ class ChatGPTService {
 
         //send prompt for AI and require summary history and current chat
         this.GetSummaryChats(user,saveSummary,{user:userPrompt,AI:AIReply});
-
+        
+        return AIReply;
     }
 
 
