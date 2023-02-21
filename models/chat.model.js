@@ -6,8 +6,8 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
-  botMessage: { type: String, required: true },
   userMessage: { type: String, required: true },
+  botMessage: { type: String, required: true },
 });
 
 const Message = mongoose.model('Chats', schema);

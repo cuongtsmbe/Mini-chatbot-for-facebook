@@ -22,12 +22,14 @@ module.exports = {
   //update summary for chat by fbid
   //return promise
   updateSummaryChatByUserID:function(user,data){
-    SummaryChatModel.updateOne({ userID: user._id}, { content:data.content},function (err, result) {
+    console.log("----console log update----");
+    console.log(user);
+    SummaryChatModel.updateOne({ userID: user._id}, { Content:data.content},function (err, result) {
       if (err){
           console.log(err)
       }
       else{
-          console.log("Updated Summary Chat: ", result);
+          console.log("---Updated Success summary chat in DB--- ");
       }
   });
   

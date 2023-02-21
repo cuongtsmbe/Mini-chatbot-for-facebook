@@ -15,16 +15,16 @@ module.exports={
         // Create the payload for a AI response text message, which
         // will be added to the body of our request to the Send API
 
-        // get user by _id
+        // get user by fbid
         let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
         let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
 
-        console.log("\n");
-        console.log("------------------");
-        console.log(`user: ${received_message.text}`);
-        console.log(`AI: ${AIreponse}`);
-        console.log("--------###-------");
-        console.log("\n");
+        // console.log("\n");
+        // console.log("------------------");
+        // console.log(`user: ${received_message.text}`);
+        // console.log(`AI: ${AIreponse}`);
+        // console.log("--------###-------");
+        // console.log("\n");
 
         response = {
             "text": AIreponse
@@ -40,7 +40,7 @@ module.exports={
                 "template_type": "generic",
                 "elements": [{
                 "title": "Is this the right picture?",
-                "subtitle": "Tôi không hiểu ảnh này của bạn.",
+                "subtitle": "Tôi không hiểu ảnh này của bạn.Làm ơn hãy gửi text cho tôi.",
                 "image_url": attachment_url,
                 "buttons": [
                     {

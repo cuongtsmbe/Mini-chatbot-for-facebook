@@ -22,23 +22,16 @@ const DB=require('./services/db.service');
   //connect DB
   DB.connect();
 
-  // //delete All chat by UserID
-  //var userDel=DB.getUserByFbID("FB-88");
-  // userDel.then(item => {
-  //   return DB.deleteChatsByUserId(item);
-  // }).then(data => {
-  //   console.log(data);
-  // }).catch(e => 
-  //   console.log(e)
-  // )
- 
-  //delete user by FbID (FbID is not _id)
-  // DB.deleteUserByFbID("FB-99").then(data => {
-  //   console.log("--delete User--")
-  //   console.log(data);
-  // }).catch(e => 
-  //   console.log(e)
-  // )
+  // var DB_USERS =require("./services/db_users.service");
+  // var DB_SUM=require("./services/db_summaries.service");
+  // let userCurrent =DB_USERS.getUserByFbID("5879867262101166");
+  // userCurrent.then(item => {
+  //   let update =DB_SUM.updateSummaryChatByUserID(item,{content:"cuongphantoi"});
+  // }).then(data=>{
+  //   console.log("update thanh cong");
+  // }).catch(e=>{
+  //   console.log(e);
+  // });
 
 app.get("/",function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
