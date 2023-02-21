@@ -1,12 +1,9 @@
 const request = require('request');
 require('dotenv').config();
-const DB=require('./db.service');
-const ChatGPTService = require('./chat.service');
+const DB_USERS=require('./db_users.service');
+const ChatGPTService = require('./chatgpt.service');
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
-
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
 module.exports={
 //handle Messenger text or file
@@ -19,7 +16,7 @@ module.exports={
         // will be added to the body of our request to the Send API
 
         // get user by _id
-        let userCurrent =await DB.getUserByFbID(sender_psid);
+        let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
         let AIreponse=await ChatGPTService.generateCompletion(userCurrent,received_message.text);
 
         console.log("\n");

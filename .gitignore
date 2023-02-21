@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/Python_Training_Data/myenv
 /.pnp
 .pnp.js
 # testing

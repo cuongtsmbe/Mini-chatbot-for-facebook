@@ -21,10 +21,6 @@ const DB=require('./services/db.service');
 
   //connect DB
   DB.connect();
-  
-  //add user
-  // DB.addUser("FB-66");
-  // DB.addUser("FB-55");
 
   // //delete All chat by UserID
   //var userDel=DB.getUserByFbID("FB-88");
@@ -36,7 +32,7 @@ const DB=require('./services/db.service');
   //   console.log(e)
   // )
  
- 
+  //delete user by FbID (FbID is not _id)
   // DB.deleteUserByFbID("FB-99").then(data => {
   //   console.log("--delete User--")
   //   console.log(data);
