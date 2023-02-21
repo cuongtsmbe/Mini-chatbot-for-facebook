@@ -35,7 +35,7 @@ const DB=require('./services/db.service');
 
 app.get("/",function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
-})
+});
 
 //Add support for GET requests to our webhook(facebook)
 app.get("/webhook",messengerMdw.getWebHook);

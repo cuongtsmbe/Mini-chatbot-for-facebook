@@ -73,7 +73,7 @@ class ChatGPTService {
     //get summary chats of user from openAI
     async GetSummaryChats(user,historySummary,current) {
 
-        let promptSummary=` lịch sử trò chuyện trước đó là "${historySummary}" \n hiện tại thì "user: ${current.user}\nAI:${current.AI}" \n . Hãy tóm tắt nó cho ngắn gọn`;
+        let promptSummary=` lịch sử trò chuyện trước đó là "${historySummary}" \n hiện tại thì "user: ${current.user}\nAI:${current.AI}" \n . Hãy tóm tắt cuộc trò chuyện đó`;
         
         //send to openAI
         let AIReplySummary =await this.generateCompletion(promptSummary);

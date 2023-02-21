@@ -9,55 +9,56 @@ module.exports={
 //handle Messenger text or file
     handleMessage:async function(sender_psid, received_message) {
         let response;
-        
+        console.log("__received_message__");
+        console.log(received_message);
         // Checks if the message contains text
         if (received_message.text) {    
-        // Create the payload for a AI response text message, which
-        // will be added to the body of our request to the Send API
+            // Create the payload for a AI response text message, which
+            // will be added to the body of our request to the Send API
 
-        // get user by fbid
-        let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
-        let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
+            // get user by fbid
+            let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
+            let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
 
-        // console.log("\n");
-        // console.log("------------------");
-        // console.log(`user: ${received_message.text}`);
-        // console.log(`AI: ${AIreponse}`);
-        // console.log("--------###-------");
-        // console.log("\n");
+            console.log("\n");
+            console.log("------------------");
+            console.log(`user: ${received_message.text}`);
+            console.log(`AI: ${AIreponse}`);
+            console.log("--------###-------");
+            console.log("\n");
 
-        response = {
-            "text": AIreponse
-        }
+            response = {
+                "text": AIreponse
+            }
         } else if (received_message.attachments) {
-        // Get the URL of the message attachment
-        // reponse for image or ..
-        let attachment_url = received_message.attachments[0].payload.url;
-        response = {
-            "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                "title": "Is this the right picture?",
-                "subtitle": "Tôi không hiểu ảnh này của bạn.Làm ơn hãy gửi text cho tôi.",
-                "image_url": attachment_url,
-                "buttons": [
-                    {
-                    "type": "postback",
-                    "title": "Yes!",
-                    "payload": "yes",
-                    },
-                    {
-                    "type": "postback",
-                    "title": "No!",
-                    "payload": "no",
-                    }
-                ],
-                }]
+            // Get the URL of the message attachment
+            // reponse for image or ..
+            let attachment_url = received_message.attachments[0].payload.url;
+            response = {
+                "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                    "title": "Is this the right picture?",
+                    "subtitle": "Tôi không hiểu ảnh này của bạn.Làm ơn hãy gửi text cho tôi.",
+                    "image_url": attachment_url,
+                    "buttons": [
+                        {
+                        "type": "postback",
+                        "title": "Yes!",
+                        "payload": "yes",
+                        },
+                        {
+                        "type": "postback",
+                        "title": "No!",
+                        "payload": "no",
+                        }
+                    ],
+                    }]
+                }
+                }
             }
-            }
-        }
         } 
         
         // Send the response message
@@ -101,7 +102,8 @@ module.exports={
         "json": request_body
         }, (err, res, body) => {
         if (!err) {
-            console.log('message sent!')
+            console.log('message sent!',request_body);
+            
         } else {
             console.error("Unable to send message:" + err);
         }
