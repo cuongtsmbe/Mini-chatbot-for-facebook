@@ -9,6 +9,13 @@ module.exports={
 //handle Messenger text or file
     handleMessage:async function(sender_psid, received_message) {
         let response;
+
+        //chặn hook có sender là fanpage và received là khách
+        //nếu cho qua sẽ tại ra đoạn chatgpt không cần thiết  
+        if(sender_psid==process.env.PSID_FANPAGE){ 
+            console.log("----------------------")
+            return true;
+        }
         // Checks if the message contains text
         if (received_message.text) {    
             // Create the payload for a AI response text message, which
