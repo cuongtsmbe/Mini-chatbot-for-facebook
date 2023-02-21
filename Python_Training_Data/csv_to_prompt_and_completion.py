@@ -1,3 +1,5 @@
+# file này giúp chuyển file dữ liệu csv thành prompy và complettion tương ứng 
+
 import pandas as pd
 import json
 
