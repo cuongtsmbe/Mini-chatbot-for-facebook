@@ -17,7 +17,7 @@ module.exports={
 
         // get user by _id
         let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
-        let AIreponse=await ChatGPTService.generateCompletion(userCurrent,received_message.text);
+        let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
 
         console.log("\n");
         console.log("------------------");
