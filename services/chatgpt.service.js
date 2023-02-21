@@ -41,7 +41,7 @@ class ChatGPTService {
         if (currentSummary && currentSummary.length > 0 ) {
             // nếu có tin nhắn cũ thì thêm đoạn tin nhắn cũ đấy vào nội dung chat
             for (let history of currentSummary) {
-                PromptSale += `Đoạn sau là tóm tắt trò chuyện lúc trước của AI và user: ${history.Content}\n `;
+                PromptSale += `Biết đoạn sau đây là tóm tắt trò chuyện lúc trước của AI và user: ${history.Content}\n `;
                 saveSummary=history.Content;
             }
         }else{
@@ -49,12 +49,12 @@ class ChatGPTService {
             DB_SUMMARY.addSummaryChat(user,{content:" "});
         }
 
-        PromptSale += `user: ${userPrompt}\n`;
+        PromptSale += `Bây giờ user nói: ${userPrompt}\n`;
         PromptSale += `AI: `;
 
         console.log("-------------PromptSale-----------------");
         console.log(PromptSale);
-
+        console.log("---------------------------------------");
         //send prompt of user to openAI and receive AI reply  
         let AIReply =await this.generateCompletion(PromptSale);
 

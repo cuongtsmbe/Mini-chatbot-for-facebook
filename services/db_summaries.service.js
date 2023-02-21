@@ -29,7 +29,7 @@ module.exports = {
           console.log(err)
       }
       else{
-          console.log("---Updated Success summary chat in DB--- ");
+          console.log("---Updated Success summary chat in DB--- \n\n <----------->");
       }
   });
   

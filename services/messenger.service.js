@@ -9,8 +9,6 @@ module.exports={
 //handle Messenger text or file
     handleMessage:async function(sender_psid, received_message) {
         let response;
-        console.log("__received_message__");
-        console.log(received_message);
         // Checks if the message contains text
         if (received_message.text) {    
             // Create the payload for a AI response text message, which
@@ -21,7 +19,7 @@ module.exports={
             let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
 
             console.log("\n");
-            console.log("------------------");
+            console.log("--------Chat----------");
             console.log(`user: ${received_message.text}`);
             console.log(`AI: ${AIreponse}`);
             console.log("--------###-------");
