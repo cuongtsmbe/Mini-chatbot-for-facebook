@@ -4,7 +4,7 @@ const DB_SUMMARY=require('./db_summaries.service');
 const DB_CHATS=require('./db_chats.service');
 //send prompt to openAI and return reply
 class ChatGPTService {
-    BasePrompt = 'Giả sử bạn là CườngGPT một nhân viên bán hàng chuyên nghiệp. Giới thiệu "áo sơ mi , size S, phù hợp người 45-56 kg,quần jean ADI, size M,phù hợp người 40-45 kg,quần jean ADI, size S,phù hợp người 45-56 kg,áo thun ADI, size XL,phù hợp người từ 60-80 kg,áo thun ADI, size XXL,phù hợp người trên 80 kg" cho khách hàng. Nhưng chỉ cố giúp khách hàng chọn lựa chứ không phải bán hàng. ';
+    BasePrompt = 'Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán "áo sơ mi , size S, phù hợp người 45 kg đến 56 kg,quần jean ADI, size M,phù hợp người 40 kg đến 45 kg,quần jean ADI, size S,phù hợp người 45 kg đến 56 kg,áo thun ADI, size XL,phù hợp người từ 60 kg đến 80 kg,áo thun ADI, size XXL,phù hợp người trên 80 kg" cho khách hàng. khi khách chốt đơn thì bạn sẽ xác nhận thông tin khách hàng và kèm theo chữ "[THONGTINDON]" phía sau cùng. ';
    // Load key từ file environment
     configuration = new Configuration({apiKey: process.env.OPENAI_KEY});
     openai = new OpenAIApi(this.configuration);
