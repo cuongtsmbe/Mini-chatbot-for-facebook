@@ -16,13 +16,13 @@ class ChatGPTService {
     openai = new OpenAIApi(this.configuration);
 
     //send prompt to openAI and return text(String) result
-    async generateCompletion(prompt) {
+    async generateCompletion(prompt,temperature=0.7) {
 
         // Gửi request về OpenAI Platform để tạo text completion
         const completion = await this.openai.createCompletion({
             model: "text-davinci-003",
             prompt:prompt,
-            temperature: 0.7,
+            temperature: temperature,
             max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
@@ -82,8 +82,8 @@ class ChatGPTService {
 
         let promptSummary=` lịch sử trò chuyện trước đó là "${historySummary}" \n hiện tại thì "user: ${current.user}\nAI:${current.AI}" \n . Hãy tóm tắt cuộc trò chuyện đó`;
         
-        //send to openAI
-        let AIReplySummary =await this.generateCompletion(promptSummary);
+        //send to openAI with temperature=0
+        let AIReplySummary =await this.generateCompletion(promptSummary,0);
         console.log("---------------sau tóm tắt -----------");
         console.log(AIReplySummary);
         console.log("--------------------------------------\n");
