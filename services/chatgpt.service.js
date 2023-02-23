@@ -9,7 +9,7 @@ class ChatGPTService {
     [quần jean ADI, size S,phù hợp người 45 kg đến 56 kg],
     [áo thun ADI, size XL,phù hợp người từ 60 kg đến 80 kg],
     [áo thun ADI, size XXL,phù hợp người trên 80 kg]
-    " cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "vui lòng gửi theo cú pháp: [LENDON] TênKH:[điền tên];SDT:[SDT Khach Hang];DiaChi:[địa chỉ KH];Đơn Hàng:[nhập sản phẩm bạn muốn mua]. Để hệ thống có thể nhận diện" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
+    " cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ KH];donhang:[nhập sản phẩm bạn muốn mua]. Để hệ thống có thể nhận diện'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
 
    // Load key từ file environment
     configuration = new Configuration({apiKey: process.env.OPENAI_KEY});
