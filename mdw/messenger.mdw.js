@@ -44,7 +44,7 @@ module.exports = {
     
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+            //console.log(webhook_event);
           
           
             // Get the sender PSID

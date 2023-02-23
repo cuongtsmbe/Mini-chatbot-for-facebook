@@ -13,7 +13,7 @@ module.exports={
         //chặn hook có sender là fanpage và received là khách
         //nếu cho qua sẽ tại ra đoạn chatgpt không cần thiết  
         if(sender_psid==process.env.PSID_FANPAGE){ 
-            console.log("----------------------")
+            console.log(`------fanpage id:${sender_psid}---------`);
             return true;
         }
         // Checks if the message contains text
@@ -24,12 +24,13 @@ module.exports={
             // get user by fbid
             let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
             let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
-
-            console.log("\n");
+            
+            console.log(`------user id:${sender_psid}---------`);
+            console.log("\n\n");
             console.log("--------Chat----------");
             console.log(`user: ${received_message.text}`);
             console.log(`AI: ${AIreponse}`);
-            console.log("--------###-------");
+            console.log("--------###-------\n\n");
             console.log("\n");
 
             response = {
