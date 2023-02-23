@@ -83,7 +83,7 @@ class ChatGPTService {
         let promptSummary=` lịch sử trò chuyện trước đó là "${historySummary}" \n hiện tại thì "user: ${current.user}\nAI:${current.AI}" \n . Hãy tóm tắt cuộc trò chuyện đó`;
         
         //send to openAI with temperature=0
-        let AIReplySummary =await this.generateCompletion(promptSummary,0);
+        let AIReplySummary =await this.generateCompletion(promptSummary,1);
         console.log("---------------sau tóm tắt -----------");
         console.log(AIReplySummary);
         console.log("--------------------------------------\n");
