@@ -25,7 +25,7 @@ module.exports={
             let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
 
             //add mongodb order user send to fanpage
-            if(received_message.text.includes("LENDON")){
+            if(received_message.text.includes("LENDON")||received_message.text.includes("lendon")){
                 DB_ORDERS.addOrder(userCurrent,received_message.text);
             }
 
