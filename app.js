@@ -19,19 +19,8 @@ const DB=require('./services/db.service');
  }));
 
 
-  //connect DB
-  DB.connect();
-
-  // var DB_USERS =require("./services/db_users.service");
-  // var DB_SUM=require("./services/db_summaries.service");
-  // let userCurrent =DB_USERS.getUserByFbID("5879867262101166");
-  // userCurrent.then(item => {
-  //   let update =DB_SUM.updateSummaryChatByUserID(item,{content:"cuongphantoi"});
-  // }).then(data=>{
-  //   console.log("update thanh cong");
-  // }).catch(e=>{
-  //   console.log(e);
-  // });
+//connect DB
+DB.connect();
 
 app.get("/",function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
@@ -41,6 +30,10 @@ app.get("/",function(req,res){
 app.get("/webhook",messengerMdw.getWebHook);
 
 app.post('/webhook', messengerMdw.postWebHook);
+
+app.get("/infomation",function(req,res){
+  res.send("17/2/2023 .AUTHOR : PHAN HUU CUONG , PHONE:0349612646");
+});
 
 
 app.listen(port, () => {

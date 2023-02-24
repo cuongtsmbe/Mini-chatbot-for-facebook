@@ -2,8 +2,9 @@ const {Configuration, OpenAIApi} = require("openai");
 require('dotenv').config();
 const DB_SUMMARY=require('./db_summaries.service');
 const DB_CHATS=require('./db_chats.service');
+
 //send prompt to openAI and return reply
-class ChatGPTService {
+class openAIService {
     BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"[áo sơ mi , size S, phù hợp người 45 kg đến 56 kg],
     [quần jean ADI, size M,phù hợp người 40 kg đến 45 kg],
     [quần jean ADI, size S,phù hợp người 45 kg đến 56 kg],
@@ -93,4 +94,4 @@ class ChatGPTService {
     }
 }
 
-module.exports = new ChatGPTService();
+module.exports = new openAIService();

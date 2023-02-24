@@ -1,7 +1,8 @@
 const request = require('request');
 require('dotenv').config();
 const DB_USERS=require('./db_users.service');
-const ChatGPTService = require('./chatgpt.service');
+const openaiService = require('./chat.service');
+const DB_ORDERS=require('./db_orders.service');
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -9,7 +10,6 @@ module.exports={
 //handle Messenger text or file
     handleMessage:async function(sender_psid, received_message) {
         let response;
-
         //chặn hook có sender là fanpage và received là khách
         //nếu cho qua sẽ tại ra đoạn chatgpt không cần thiết  
         if(sender_psid==process.env.PSID_FANPAGE){ 
@@ -17,13 +17,22 @@ module.exports={
             return true;
         }
         // Checks if the message contains text
-        if (received_message.text) {    
+        if (received_message.text) {  
             // Create the payload for a AI response text message, which
             // will be added to the body of our request to the Send API
 
             // get user by fbid
             let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
-            let AIreponse=await ChatGPTService.GetAIReplyForCustomer(userCurrent,received_message.text);
+
+            //add mongodb order user send to fanpage
+            if(received_message.text.includes("LENDON")){
+                DB_ORDERS.addOrder(userCurrent,received_message.text);
+            }
+
+            //return if user active == 0 (turn off AI)
+            if(userCurrent.active==0){return ;}
+
+            let AIreponse=await openaiService.GetAIReplyForCustomer(userCurrent,received_message.text);
             
             console.log(`------user id:${sender_psid}---------`);
             console.log("\n\n");

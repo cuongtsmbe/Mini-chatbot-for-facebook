@@ -5,6 +5,8 @@
 /Python_Training_Data/myenv
 /.pnp
 .pnp.js
+/routers
+/util
 # testing
 /coverage
 

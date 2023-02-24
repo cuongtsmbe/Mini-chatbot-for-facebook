@@ -19,8 +19,8 @@ module.exports = {
   },
 
   //add new user
-  addNewUser:function(fbid){
-    let userNew = new UserModel({fbid});
+  addNewUser:function(fbid,active){
+    let userNew = new UserModel({fbid,active});
     return userNew.save();
   },
 
@@ -31,7 +31,7 @@ module.exports = {
       fbid,
     }).exec();
     if (!user) {
-      user = this.addNewUser(fbid);
+      user = this.addNewUser(fbid,1);
     }
     return user;
   },
