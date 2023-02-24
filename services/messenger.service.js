@@ -26,7 +26,7 @@ module.exports={
 
             //add mongodb order user send to fanpage
             if(received_message.text.includes("LENDON")||received_message.text.includes("lendon")){
-                DB_ORDERS.addOrder(userCurrent,received_message.text);
+                DB_ORDERS.addOrder(userCurrent,{content:received_message.text});
             }
 
             //return if user active == 0 (turn off AI)
