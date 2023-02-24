@@ -23,9 +23,10 @@ module.exports={
 
             // get user by fbid
             let userCurrent =await DB_USERS.getUserByFbID(sender_psid);
-
+            
             //add mongodb order user send to fanpage
-            if(received_message.text.includes("LENDON")||received_message.text.includes("lendon")){
+            //thêm "donhang" vào để phòng trg hợp khách hàng ghi sai/không ghi : "LENDON" || lendon
+            if(received_message.text.includes("LENDON")||received_message.text.includes("lendon")||received_message.text.includes("donhang")){
                 DB_ORDERS.addOrder(userCurrent,{content:received_message.text});
             }
 
