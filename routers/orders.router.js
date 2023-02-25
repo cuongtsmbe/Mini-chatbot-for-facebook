@@ -14,15 +14,23 @@ module.exports = {
 
     //lay danh sach don hang (moi) by status
     getListOrders:async function(req,res,next){
+        let query = {
+            page : !isNaN(req.query.page) ? parseInt(req.query.page) : 1,
+            statusOrder : !isNaN(req.query.statusOrder) ? parseInt(req.query.statusOrder) : -1
+        }
+     
+        if(query.page<=0) query.page=1;
+
         let condition={
             limit       :config.limitOrders, //number
-            offset      :(req.query.page-1)*config.limitOrders, //number
-            status      :req.query.statusOrder //number
+            offset      :(query.page-1)*config.limitOrders, //number
+            status      :query.statusOrder //number
         };
 
-        if(typeof condition.limit !== "number" || typeof condition.offset !== "number" || typeof condition.status !== "number"){
-            return res.json({status:404,message:"status,limit,offset is number"});
+        if(isNaN(condition.limit) || isNaN(condition.offset)|| isNaN(condition.status)){
+            return res.json({status:400,message:"Bad request . Status,limit,offset is number"});
         }
+
         try{
             var [orders,countOrders]=await Promise.all([
                 await DB_ORDERS.getListOrder(condition.limit,condition.offset,condition.status),
@@ -39,30 +47,40 @@ module.exports = {
             status:200,
             data:orders,
             countNoLimit:countOrders,
-            PageCurrent:req.query.page,
-            TotalPage:Math.ceil(1.0*countResult[0].count/condition.limit)
+            PageCurrent:query.page,
+            TotalPage:Math.ceil(1.0*countOrders/condition.limit)
         })
     },
 
     //lay danh sach don theo sdt and status
     getOrdersByPhone:async function(req,res,next){
+        let query = {
+            page : !isNaN(req.query.page) ? parseInt(req.query.page) : 1,
+            statusOrder : !isNaN(req.query.statusOrder) ? parseInt(req.query.statusOrder) : -1,
+            phone : req.query.phone
+        }
+        if(typeof query.phone !== 'string'){
+            return res.json({status:400,message:"Bad request - phone is string"});
+        }
         let condition={
             limit       :config.limitOrders, //number
-            offset      :(req.query.page-1)*config.limitOrders, //number
-            phone       :req.query.phone,   //string
-            status      :req.query.statusOrder //number
+            offset      :(query.page-1)*config.limitOrders, //number
+            phone       :query.phone,   //string
+            status      :query.statusOrder //number
         };
-
+       
         //check condition variable
-        if(typeof condition.limit !== "number" || typeof condition.offset !== "number" || typeof condition.status !== "number"){
-            return res.json({status:404,message:"status,limit,offset is number"});
+        if(isNaN(condition.limit) || isNaN(condition.offset) || isNaN(condition.status)){
+            return res.json({status:400,message:"Bad request - status,limit,offset is number"});
         }
+  
         try{
             //get order have limit,offset and count order had found with that condition 
             var [orders,countOrders]=await Promise.all([
                 await DB_ORDERS.getOrdersByPhone(condition.phone,condition.limit,condition.offset,condition.status),
-                await DB_ORDERS.countOrdersByPhone(condition.status)
+                await DB_ORDERS.countOrdersByPhone(condition.phone,condition.status)
             ]);
+            
         }catch(err){
             console.log(err);
             return res.json({
@@ -70,13 +88,13 @@ module.exports = {
                 message:"Error server DB."
             });
         }
-
+        
         return res.json({
             status:200,
             data:orders,
             countNoLimit:countOrders,
-            PageCurrent:req.query.page,
-            TotalPage:Math.ceil(1.0*countResult[0].count/condition.limit)
+            PageCurrent:query.page,
+            TotalPage:Math.ceil(1.0*countOrders/condition.limit)
         })
     },
 
@@ -86,31 +104,28 @@ module.exports = {
         let customer={ 
             fbid :    req.body.fbid,    //string
             order : req.body.order,     //string
-            statusOrder : req.body.statusOrder  //number
+            statusOrder : isNaN(req.body.statusOrder) ? 0 : req.body.statusOrder   //number
         }
 
         // block=1 is stop query DB
         let block=0;
         //check customer fbid
-        if(customer.fbid.length === 0||customer.fbid === undefined || customer.fbid === null){
+        if(customer.fbid === undefined || customer.fbid === null || customer.fbid.length === 0){
             block=1;
         }
         //check content order
-        if(customer.order.length === 0|| customer.order === undefined || customer.order === null ){
+        if(customer.order === undefined || customer.order === null || customer.order.length === 0){
             block=1;
         }
-        //check status
-        if(customer.statusOrder === undefined || customer.statusOrder === null || typeof customer.statusOrder !== "number"){
-            //check value status include [0,3]
-            if(customer.statusOrder < 0 || customer.statusOrder > 3){
-                return res.json({
-                    status:400,
-                    message:"Trạng thái đơn không hợp lệ."
-                });
-            }
-            customer.statusOrder = 0;
+  
+        //check status status include [0,3]
+        if(customer.statusOrder < 0 || customer.statusOrder > 3){
+            return res.json({
+                status:400,
+                message:"Trạng thái đơn không hợp lệ."
+            });
         }
-
+        //block request add new order
         if(block === 1){
             return res.json({
                 status:400,
@@ -119,7 +134,7 @@ module.exports = {
         }
 
         try{
-            //get user by fbid
+            //just get user by fbid then set false for second parameter
             var user = await DB_USERS.getUserByFbID(customer.fbid,false);
         }catch(err){
             console.log(err);
@@ -148,26 +163,35 @@ module.exports = {
         }
         return res.json({
             status:200,
-            message:`Thêm hóa đơn cho ID ${customer.fbid} thành công.`
+            message:`Thêm hóa đơn cho user ID ${customer.fbid} thành công.`
         });
 
     },
 
     //update content || status order by order ID
     update:async function(req,res,next){
-
+        //ID is _id of order
         let order={
-            id : req.body.ID,
-            order : req.body.order,
-            statusOrder : req.body.statusOrder
+            id : req.body.ID,                   //string
+            order : req.body.order,             //string
+            statusOrder : req.body.statusOrder  //number
         }
-
+       
         //check id
         if(order.id === null || order.id === undefined){
             return res.json({
                 status:400,
                 message: "Error order ID empty"
             });
+        }
+
+        //check objectid in mongodb
+        //regular expression for ObjectId(mongodb) values, since they are represented as hexadecimal strings.
+        if (!(order.id && (order.id.length === 12 || (order.id.length === 24 && /^[0-9a-fA-F]+$/.test(order.id))))) {
+            return res.json({
+                status : 400,
+                message : "id is Not a valid ObjectId string"
+            })
         }
       
         //cover order from undefined to null
@@ -182,13 +206,29 @@ module.exports = {
         if(order.order === null && order.statusOrder === null){
             return res.json({
                 status:400,
-                message: "Error order status or content empty"
+                message: "Error order status and content empty."
             });
         }
-        try{
-        //result is { n: 0, nModified: 0, ok: 1 } 
-        var result = await DB_ORDERS.updateOrderByID(order.id,order.order,order.statusOrder);
 
+        //if status is not null then status is number include [0;3]
+        if(order.statusOrder !== null){
+            if(isNaN(order.statusOrder)){
+                return res.json({
+                    status:400,
+                    message: "Error order status is not number."
+                });
+            }else if(order.statusOrder < 0 || order.statusOrder > 3){
+                return res.json({
+                    status:400,
+                    message: "Error order status not include [0;3] "
+                });
+            }
+        }
+
+        try{
+           
+            var result = await DB_ORDERS.updateOrderByID(order.id,{content:order.order,status:order.statusOrder});
+          
         }catch(err){
             console.log(err);
             return res.json({
@@ -197,11 +237,19 @@ module.exports = {
             });
         }
 
-        if(result.ok == 0){
+        if(result.modifiedCount == 0){
+            if(result.matchedCount == 0){
+                return res.json({
+                    status:500,
+                    message: "data update matched count is 0 ."
+                });
+            }
+
             return res.json({
                 status:500,
                 message: "update failed."
             });
+
         }else{
             return res.json({
                 status:200,
@@ -225,6 +273,15 @@ module.exports = {
             });
         }
 
+        //check objectid in mongodb
+        //regular expression for ObjectId(mongodb) values, since they are represented as hexadecimal strings.
+        if (!(order.id && (order.id.length === 12 || (order.id.length === 24 && /^[0-9a-fA-F]+$/.test(order.id))))) {
+            return res.json({
+                status : 400,
+                message : "id is Not a valid ObjectId string"
+            })
+        }
+
         try{
             var result = await DB_ORDERS.deleteOrderById(order.id);
         }catch(err){
@@ -236,15 +293,15 @@ module.exports = {
         }
 
 
-        if(result.ok == 0){
+        if(result.deletedCount == 0){
             return res.json({
                 status:500,
-                message: "delete query failed."
+                message: "delete failed."
             });
         }else{
             return res.json({
                 status:200,
-                message: "delete query success."
+                message: "delete successed."
             });
         }
 

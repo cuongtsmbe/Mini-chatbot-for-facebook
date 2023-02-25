@@ -33,7 +33,7 @@ app.post('/webhook', messengerMdw.postWebHook);
 
 require("./routers/orders.router").orderRouters(app);
 
-app.get("/infomation",function(req,res){
+app.get("/about",function(req,res){
   res.send("17/2/2023 .AUTHOR : PHAN HUU CUONG , PHONE:0349612646");
 });
 

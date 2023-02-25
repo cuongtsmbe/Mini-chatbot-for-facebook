@@ -2,13 +2,13 @@
     "CLIENT": {
         "GET_ORDERS_NEW" : "/order/list",
 
-        "GET_ORDERS_BY_PHONE" : "/order/phone/:nbphone",
+        "GET_ORDERS_BY_PHONE" : "/order/phone",
 
         "ADD_ORDER_NEW" : "/order/create",
 
-        "UPDATE_ORDER_BY_ID" : "/order/update/:id",
+        "UPDATE_ORDER_BY_ID" : "/order/update",
 
-        "DELETE_ORDER_BY_ID" : "/order/del/:id",
+        "DELETE_ORDER_BY_ID" : "/order/del",
 
         "EDIT_PROMPT" : "/admin/edit",
 

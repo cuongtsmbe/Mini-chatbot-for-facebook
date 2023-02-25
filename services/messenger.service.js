@@ -1,7 +1,7 @@
 const request = require('request');
 require('dotenv').config();
 const DB_USERS=require('./db_users.service');
-const openaiService = require('./chat.service');
+const openaiService = require('./gpt.service');
 const DB_ORDERS=require('./db_orders.service');
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
