@@ -26,15 +26,16 @@ app.get("/",function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
 });
 
-//Add support for GET requests to our webhook(facebook)
+//Add support for GET requests to facebook webhook
 app.get("/webhook",messengerMdw.getWebHook);
-
 app.post('/webhook', messengerMdw.postWebHook);
+
+
+require("./routers/orders.router").orderRouters(app);
 
 app.get("/infomation",function(req,res){
   res.send("17/2/2023 .AUTHOR : PHAN HUU CUONG , PHONE:0349612646");
 });
-
 
 app.listen(port, () => {
   console.log(` listening on port ${port}!`);
