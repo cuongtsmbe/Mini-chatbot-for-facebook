@@ -24,13 +24,13 @@ module.exports = {
     return userNew.save();
   },
 
-  //get user by FBid . IF don't have fbid then create it
+  //get user by FBid . IF don't have fbid then create it if createNew=true
   //return promise
-  getUserByFbID:async function(fbid){
+  getUserByFbID:async function(fbid,createNew=true){
     let user = await UserModel.findOne({
       fbid,
     }).exec();
-    if (!user) {
+    if (!user && createNew) {
       user = this.addNewUser(fbid,1);
     }
     return user;
