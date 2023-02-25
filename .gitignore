@@ -5,14 +5,13 @@
 /Python_Training_Data/myenv
 /.pnp
 .pnp.js
-/routers
-/util
+
 # testing
 /coverage
 
 # production
 /build
-
+.env
 # misc
 .DS_Store
 .env.local
