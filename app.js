@@ -22,7 +22,7 @@ const DB=require('./services/db.service');
 //connect DB
 DB.connect();
 
-app.get("/",function(req,res){
+app.get("/",async function(req,res){
   res.send("17/2/2023 . let go to fb and chat with AI.");
 });
 
@@ -32,6 +32,7 @@ app.post('/webhook', messengerMdw.postWebHook);
 
 
 require("./routers/orders.router").orderRouters(app);
+require("./routers/gpt.router").gptRouters(app);
 
 app.get("/about",function(req,res){
   res.send("17/2/2023 .AUTHOR : PHAN HUU CUONG , PHONE:0349612646");
