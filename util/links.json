@@ -10,7 +10,7 @@
 
         "DELETE_ORDER_BY_ID" : "/order/del",
 
-        "EDIT_PROMPT" : "/admin/edit",
+        "EDIT_PROMPT" : "/gpt/prompt/edit",
 
         "CONTROL_ACTIVE_AI" : "/control/AI"
     }
