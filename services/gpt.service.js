@@ -2,16 +2,15 @@ const {Configuration, OpenAIApi} = require("openai");
 require('dotenv').config();
 const DB_SUMMARY=require('./db_summaries.service');
 const DB_CHATS=require('./db_chats.service');
+const DB_GPT = require('./db_gpt.service');
 
 //send prompt to openAI and return reply
 class openAIService {
-    BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"[áo sơ mi , size S, phù hợp người 45 kg đến 56 kg],
-    [quần jean ADI, size M,phù hợp người 40 kg đến 45 kg],
-    [quần jean ADI, size S,phù hợp người 45 kg đến 56 kg],
-    [áo thun ADI, size XL,phù hợp người từ 60 kg đến 80 kg],
-    [áo thun ADI, size XXL,phù hợp người trên 80 kg]
-    " cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ giao hàng];donhang:[những sản phẩm muốn mua]. Để hệ thống có thể  tạo đơn/cập nhật lại đơn'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
 
+    //prompt example
+    // BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"iphone 8" cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ giao hàng];donhang:[những sản phẩm muốn mua]. Để hệ thống có thể  tạo đơn/cập nhật lại đơn'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
+
+    BasePrompt;
    // Load key từ file environment
     configuration = new Configuration({apiKey: process.env.OPENAI_KEY});
     openai = new OpenAIApi(this.configuration);
@@ -39,9 +38,22 @@ class openAIService {
 
     //get AI reply for question Customer (based on summarized chats history ) 
     async GetAIReplyForCustomer(user,userPrompt){
+
+        //get prompt from DB
+        let promptObj = await DB_GPT.getOnePrompt();
+
+        // assign value from DB for BasePrompt variable
+        if(promptObj === null){
+            this.BasePrompt = " ";
+        }else{
+            this.BasePrompt = promptObj.prompt; 
+        }
+
+        console.log("------------------BasePrompt--------------");
+        console.log(this.BasePrompt);
+
         // get summary chats of user
         let currentSummary= await DB_SUMMARY.getSummaryChatsByUserId(user);
-
         let PromptSale = this.BasePrompt + '\n\n';
         let saveSummary="";
 
