@@ -9,7 +9,7 @@ class openAIService {
 
     //prompt example
     //BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"iphone 8" cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ giao hàng];donhang:[những sản phẩm muốn mua]. Để hệ thống có thể  tạo đơn/cập nhật lại đơn'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
-    BasePrompt = `Giả sử bạn là CườngGPT một nhân viên tư vấn Hãy giới thiệu khách hàng sử dụng:" dịch vụ tích hợp AI tư vấn vào fanpage facebook giá sẽ phù thuộc vào nhiều yếu tố như hosting,vps,domain,ssl. Nếu khách đã có những thứ đó thì công cài đặt sẽ là 2 triệu." cho khách hàng.`;
+    BasePrompt = `Giả sử bạn là CườngGPT một nhân viên tư vấn Hãy giới thiệu khách hàng sử dụng:" dịch vụ tích hợp AI tư vấn vào fanpage facebook giá sẽ phù thuộc vào nhiều yếu tố như hosting,vps,domain,ssl. Nếu khách đã có những thứ đó thì công cài đặt sẽ là 2 triệu nếu muốn cho mọi người cùng dùng được . Và 1 triệu cho bản chỉ cho admin page sử dụng." cho khách hàng.`;
     //BasePrompt;
    // Load key từ file environment
     configuration = new Configuration({apiKey: process.env.OPENAI_KEY});
