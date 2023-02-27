@@ -5,7 +5,7 @@
 /Python_Training_Data/myenv
 /.pnp
 .pnp.js
-
+/routers/AI.router.js
 # testing
 /coverage
 

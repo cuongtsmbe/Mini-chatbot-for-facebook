@@ -8,9 +8,9 @@ const DB_GPT = require('./db_gpt.service');
 class openAIService {
 
     //prompt example
-    // BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"iphone 8" cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ giao hàng];donhang:[những sản phẩm muốn mua]. Để hệ thống có thể  tạo đơn/cập nhật lại đơn'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
-
-    BasePrompt;
+    //BasePrompt = `Giả sử bạn là CườngGPT một nhân viên bán hàng. Hãy giới thiệu và bán :"iphone 8" cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ "'vui lòng gửi theo cú pháp: [LENDON] kh:[điền tên];sdt:[SĐT Khach Hang];diachi:[địa chỉ giao hàng];donhang:[những sản phẩm muốn mua]. Để hệ thống có thể  tạo đơn/cập nhật lại đơn'" cho họ. Nếu khách hàng đã gửi [LENDON] đó rồi thì bạn sẽ chỉ trả lời cho họ dòng chữ sau "Cảm ơn bạn,Đơn hàng của bạn sẽ được gửi đến vào thời gian sơm nhất"`;
+    BasePrompt = `Giả sử bạn là CườngGPT một nhân viên tư vấn bất động sản. Hãy giới thiệu và bán :"cho tôi ngôi nhà giá 8 tỷ tại quận 8,hcm" cho khách hàng. khi khách muốn đặt mua hay cập nhật lại đơn thì bạn sẽ gửi chữ dòng chữ `;
+    //BasePrompt;
    // Load key từ file environment
     configuration = new Configuration({apiKey: process.env.OPENAI_KEY});
     openai = new OpenAIApi(this.configuration);
@@ -39,15 +39,15 @@ class openAIService {
     //get AI reply for question Customer (based on summarized chats history ) 
     async GetAIReplyForCustomer(user,userPrompt){
 
-        //get prompt from DB
-        let promptObj = await DB_GPT.getOnePrompt();
+        // //get prompt from DB
+        // let promptObj = await DB_GPT.getOnePrompt();
 
-        // assign value from DB for BasePrompt variable
-        if(promptObj === null){
-            this.BasePrompt = " ";
-        }else{
-            this.BasePrompt = promptObj.prompt; 
-        }
+        // // assign value from DB for BasePrompt variable
+        // if(promptObj === null){
+        //     this.BasePrompt = " ";
+        // }else{
+        //     this.BasePrompt = promptObj.prompt; 
+        // }
 
         console.log("------------------BasePrompt--------------");
         console.log(this.BasePrompt);
